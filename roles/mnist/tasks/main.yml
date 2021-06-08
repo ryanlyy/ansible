@@ -1,0 +1,9 @@
+- name: ship mxnet_mnist
+  copy:
+    src: files/mxnet-mnist-{{ MXNET_MNIST }}.tar
+    dest: /home/mxnet-mnist-{{ MXNET_MNIST }}.tar
+    owner: root
+    group: root
+
+- name: upload mxnet-mnist image
+  command: docker load -i /home/mxnet-mnist-{{ MXNET_MNIST }}.tar

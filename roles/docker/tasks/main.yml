@@ -1,0 +1,49 @@
+---
+- name: Add Docker repo
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docer-ce.repo
+  become: yes
+
+- name: Install Docker
+  yum:
+    name: docker-ce
+    state: present
+  become: yes
+
+- name: Creates docker.service.d directory
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+
+- name: Add docker proxy
+  copy:
+    src: files/http_proxy.conf
+    dest: /etc/systemd/system/docker.service.d/http_proxy.conf
+    owner: root
+    group: root
+
+- name: Add docker daemon conf
+  copy:
+    src: files/daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+
+- name: restart service docker
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker 
+
+- name: state Docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add user docker to docker group
+  user:
+    name: docker
+    groups: docker
+    append: yes

@@ -1,0 +1,16 @@
+---
+- name: Copy chronyd configuration 
+  template: src=chrony.conf dest=/etc/chrony.conf
+  notify: restart chronyd
+
+- name: chronyd state
+  service: name=chronyd state=started enabled=yes
+
+- name: change timezone
+  file:
+    src: /usr/share/zoneinfo/Asia/Shanghai
+    dest: /etc/localtime
+    state: link
+
+- name: run hwclock
+  command: hwclock --systohc

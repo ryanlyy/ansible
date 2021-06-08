@@ -1,0 +1,28 @@
+- name: ship sla images
+  copy:
+    src: files/{{ item }}
+    dest: /home/{{ item }}
+    owner: root
+    group: root
+  loop:
+    - metrics-collector-20200917-6.tar
+    - sla-monitoring-20200918-3.tar
+    - prometheus-2.16.0-r0-3.tar
+    - metrics-collector-20200929-1.tar
+    - metrics-collector-20200929-2.tar
+    - metrics-collector-20200929-3.tar
+    - metrics-collector-20201009-1.tar
+    - sla-monitoring-20201009-4.tar
+
+- name: upload sla image
+  command: 
+    docker load -i /home/{{ item }}
+  loop:
+    - metrics-collector-20200917-6.tar
+    - sla-monitoring-20200918-3.tar
+    - prometheus-2.16.0-r0-3.tar
+    - metrics-collector-20200929-1.tar
+    - metrics-collector-20200929-2.tar
+    - metrics-collector-20200929-3.tar
+    - metrics-collector-20201009-1.tar
+    - sla-monitoring-20201009-4.tar

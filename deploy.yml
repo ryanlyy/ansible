@@ -1,0 +1,30 @@
+---
+- name: Do some tasks on all hosts
+  hosts: all
+  gather_facts: False
+  remote_user: root
+  roles:
+    #- chrony
+    #- firewalld
+    #- proxy
+    #- docker
+    #- swap
+    #- kubernetes/common
+    #- mnist
+    #- sla
+    #- shutdown
+
+- name: install kubernetes control
+  hosts: controls
+  gather_facts: False
+  remote_user: root
+  roles:
+    #- kubernetes/common
+
+- name: install kubernetes nodes
+  hosts: nodes 
+  gather_facts: False
+  remote_user: root
+  roles:
+    #- kubernetes/common
+

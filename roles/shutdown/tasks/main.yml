@@ -1,0 +1,5 @@
+- name: wall hosts
+  shell: wall "ssc1-15 will be poweroff at 5:00PM, if any urgent please run \"shutdown -c\" to cancel this shutdown but you need to poweroff it by yourself when you are done. Thanks, Ryan LIU"
+
+- name: shutdown all hosts
+  shell: shutdown -P "17:00"

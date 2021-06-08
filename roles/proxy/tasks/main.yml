@@ -1,0 +1,7 @@
+---
+- name: Copy environment
+  copy:
+    src: files/environment
+    dest: /etc/environment
+    owner: root
+    group: root
