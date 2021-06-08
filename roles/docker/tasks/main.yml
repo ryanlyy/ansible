@@ -1,15 +1,50 @@
 ---
 - name: Add Docker repo
+  when: target_os_family == 'RedHat'
   get_url:
     url: https://download.docker.com/linux/centos/docker-ce.repo
     dest: /etc/yum.repos.d/docer-ce.repo
   become: yes
 
 - name: Install Docker
+  when: target_os_family == 'RedHat'
   yum:
     name: docker-ce
     state: present
   become: yes
+
+- name: Setup repostiroy on Debain
+  when: target_os_family == 'Debian'
+  apt: name={{item}} state=latest update_cache=true
+  with_items:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+
+- name: Add Docker official GPG key
+  when: target_os_family == 'Debian'
+  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+- name: add docker repos on Debian
+  when: target_os_family == 'Debian'
+  copy:
+    src: files/docker.list
+    dest: /etc/apt/sources.list.d
+    owner: root
+    group: root
+
+- name: run apt-get update to refresh docker repos
+  shell: apt-get update
+
+- name: Setup repostiroy on Debain
+  when: target_os_family == 'Debian'
+  apt: name={{item}} state=latest update_cache=true
+  with_items:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
 
 - name: Creates docker.service.d directory
   file:
@@ -30,13 +65,7 @@
     owner: root
     group: root
 
-- name: restart service docker
-  systemd:
-    state: restarted
-    daemon_reload: yes
-    name: docker 
-
-- name: state Docker service
+- name: start Docker service
   service:
     name: docker
     state: started
