@@ -41,3 +41,16 @@
 
 - name: firewalld state
   service: name=firewalld state=stopped enabled=no
+
+- name: add ryliu into sudoers
+  blockinfile:
+    path: /etc/sudoers
+    insertafter: EOF
+    block: | 
+      ryliu ALL=(ALL) NOPASSWD:ALL
+
+- name: permit remote root access
+  replace:
+    path: /etc/ssh/sshd_config
+    regexp: '(PermitRootLogin)'
+    replace: 'PermitRootLogin yes'
