@@ -1,15 +1,13 @@
 ---
 - name: install chrony on Debin
   when: target_os_family == 'Debian'
-  apt: name={{item}} state=latest update_cache=true
+  apt: name=chrony state=latest update_cache=true
   with_items:
       - chrony
 
 - name: install chrony on CentOS
   when: target_os_family == 'RedHat'
-  yum: name={{item}} state=latest update_cache=true
-  with_items:
-      - chrony
+  yum: name=chrony state=latest update_cache=true
 
 - name: Copy chronyd configuration 
   template: src=chrony.conf dest=/etc/chrony.conf
