@@ -1,10 +1,8 @@
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-135.252.135.241 foss-ssc-1
-135.252.135.242 foss-ssc-2
-135.252.135.243 foss-ssc-3
-135.252.135.244 foss-ssc-4
-135.252.135.245 foss-ssc-5
-135.252.135.246 foss-ssc-6
-135.252.135.247 foss-ssc-7
-
+192.168.122.136 k8s-controler-1
+192.168.122.12 k8s-controler-2
+192.168.122.98 k8s-controler-3
+192.168.122.11 k8s-worker-1
+192.168.122.61 k8s-worker-2
+192.168.122.116 k8s-worker-3
