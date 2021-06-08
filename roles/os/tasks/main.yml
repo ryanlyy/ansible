@@ -14,12 +14,12 @@
     block: | 
       proxy=http://10.158.100.2:8080
 
-- name: update and upgrade apt packages
-  when: target_os_family == 'Debian'
-  become: true
-  apt:
-    upgrade: yes
-    update_cache: yes
+#- name: update and upgrade apt packages
+#  when: target_os_family == 'Debian'
+#  become: true
+#  apt:
+#   upgrade: yes
+#    update_cache: yes
 
 - name: upgrade all yum packages
   when: target_os_family == 'RedHat'
@@ -37,9 +37,11 @@
    replace: '# \1'
 
 - name: stop firewalld 
+  when: target_os_family == 'RedHat'  
   service: name=firewalld state=stopped enabled=no
 
 - name: firewalld state
+  when: target_os_family == 'RedHat'
   service: name=firewalld state=stopped enabled=no
 
 - name: add ryliu into sudoers
