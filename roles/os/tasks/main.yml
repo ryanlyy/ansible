@@ -22,7 +22,7 @@
     update_cache: yes
 
 - name: upgrade all yum packages
-  when: target_os_family == "RedHat
+  when: target_os_family == 'RedHat'
   yum:
     name: '*'
     state: latest
