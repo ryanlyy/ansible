@@ -54,7 +54,7 @@
 - name: permit remote root access
   replace:
     path: /etc/ssh/sshd_config
-    regexp: '(PermitRootLogin)'
+    regexp: '(^.*PermitRootLogin.*$)'
     replace: 'PermitRootLogin yes'
 
 - name: update hosts
