@@ -16,20 +16,9 @@
 - name: Setup repostiroy on Debain
   when: target_os_family == 'Debian'
   apt: 
-    name: ['apt-transport-https','certificates', 'curl', 'gnupg', 'lsb-release']
+    name: ['apt-transport-https','ca-certificates', 'curl', 'gnupg', 'lsb-release']
     state: latest 
     update_cache: true
-
-- name: Download Docker GPG Key
-  when: target_os_family == 'Debian'
-  get_url:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    dest: /tmp/docker.gpg
-  become: yes
-
-- name: Install Docker GPG Key
-  when: target_os_family == 'Debian'
-  shell: cat /tmp/docker.gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
 - name: add docker repos on Debian
   when: target_os_family == 'Debian'
