@@ -1,0 +1,43 @@
+---
+- name: setup os environment
+  copy:
+    src: files/environment
+    dest: /etc/environment
+    owner: root
+    group: root
+
+- name: update yum configuration
+  when: target_os_family == 'RedHat'
+  blockinfile:
+    path: /etc/yum.conf
+    insertafter: EOF
+    block: | 
+      proxy=http://10.158.100.2:8080
+
+- name: update and upgrade apt packages
+  when: target_os_family == 'Debian'
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: upgrade all yum packages
+  when: target_os_family == "RedHat
+  yum:
+    name: '*'
+    state: latest
+
+- name: disabling Swap on all nodes
+  shell: swapoff -a
+
+- name: commenting Swap entries in /etc/fstab
+  replace:
+   path: /etc/fstab
+   regexp: '(^/.*swap*)'
+   replace: '# \1'
+
+- name: stop firewalld 
+  service: name=firewalld state=stopped enabled=no
+
+- name: firewalld state
+  service: name=firewalld state=stopped enabled=no

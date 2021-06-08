@@ -1,0 +1,25 @@
+---
+- name: Install Kubernets Common Environment
+  hosts: all
+  gather_facts: False
+  remote_user: root
+  roles:
+    - os
+    #- chrony
+    #- docker
+    #- kubernetes/common
+
+- name: install kubernetes controlers
+  hosts: controlers
+  gather_facts: False
+  remote_user: root
+  roles:
+    #- kubernetes/controler
+
+- name: install kubernetes workers
+  hosts: workers 
+  gather_facts: False
+  remote_user: root
+  roles:
+    #- kubernetes/worker
+
