@@ -15,17 +15,21 @@
 
 - name: Setup repostiroy on Debain
   when: target_os_family == 'Debian'
-  apt: name={{item}} state=latest update_cache=true
-  with_items:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - gnupg
-      - lsb-release
+  apt: 
+    name: ['apt-transport-https','certificates', 'curl', 'gnupg', 'lsb-release']
+    state: latest 
+    update_cache: true
 
-- name: Add Docker official GPG key
+- name: Download Docker GPG Key
   when: target_os_family == 'Debian'
-  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /tmp/docker.gpg
+  become: yes
+
+- name: Install Docker GPG Key
+  when: target_os_family == 'Debian'
+  shell: cat /tmp/docker.gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
 - name: add docker repos on Debian
   when: target_os_family == 'Debian'
@@ -40,11 +44,10 @@
 
 - name: Setup repostiroy on Debain
   when: target_os_family == 'Debian'
-  apt: name={{item}} state=latest update_cache=true
-  with_items:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
+  apt: 
+    name: ['docker-ce', 'docker-ce-cli', 'containerd.io'] 
+    state: latest 
+    update_cache: true
 
 - name: Creates docker.service.d directory
   file:

@@ -6,7 +6,7 @@
   roles:
     - os
     - chrony
-    #- docker
+    - docker
     #- kubernetes/common
 
 - name: install kubernetes controlers
