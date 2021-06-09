@@ -20,3 +20,6 @@ kubeadm join 192.168.122.250:9443 --token wh3qbp.uddvu2c0yu5f7wst --discovery-to
 ```
 kubeadm join 192.168.122.250:9443 --token wh3qbp.uddvu2c0yu5f7wst --discovery-token-ca-cert-hash sha256:9a597ff94b2359e0b3d9d18add4e741ccab01293d6db3b43ec67d54af7331d2d
 ```
+
+# References
+https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/
