@@ -5,17 +5,17 @@
   remote_user: root
   roles:
     #- os
-    - tools
+    #- tools
     #- chrony
     #- docker
-    #- kubernetes/common
+    - kubernetes/common
 
 - name: install kubernetes controlers
   hosts: controlers
   gather_facts: False
   remote_user: root
   roles:
-    - ha
+    #- ha
     #- kubernetes/controler
 
 - name: install kubernetes workers

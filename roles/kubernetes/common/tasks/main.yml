@@ -1,9 +1,11 @@
-- name: Creating a repository file for Kubernetes
+- name: Creating a repository file for Kubernetes on CentOS
+  when: target_os_family == 'Redhat'
   file:
    path: /etc/yum.repos.d/kubernetes.repo
    state: touch
 
-- name: Adding repository details in Kubernetes repo file.
+- name: Adding repository details in Kubernetes repo file on CentOS
+  when: target_os_family == 'Redhat'
   blockinfile:
    path: /etc/yum.repos.d/kubernetes.repo
    block: |
@@ -15,6 +17,27 @@
     repo_gpgcheck=1
     gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+- name: add kubernetes repos on Debian
+  when: target_os_family == 'Debian'
+  copy:
+    src: files/kubernetes.list
+    dest: /etc/apt/sources.list.d
+    owner: root
+    group: root
+
+- name: get kubernetes gpg key on Debian
+  when: target_os_family == 'Debain'
+  get_url:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+  become: yes
+
+- name: update apt packages for kubernetes
+  when: target_os_family == 'Debian'
+  become: true
+  apt:
+    update_cache: yes
 
 - name: Creating sysctl conf file for k8s
   file:
@@ -40,10 +63,18 @@
    regexp: '(^SELINUX=enforcing$)'
    replace: 'SELINUX=permissive'
 
-- name: install kubeadm kubectl kubelet
+- name: install kubeadm kubectl kubelet on CentOS
+  when: target_os_family == 'Redhat'
   yum:
     name: "{{ packages }}"
     state: present
+
+- name: install kubeadm kubectl kubelet on Debain
+  when: target_os_family == 'Debian'
+  apt:
+    name: ['kubeadm', 'kubectl', 'kubelet']
+    state: latest 
+    update_cache: true
 
 - name: start kubelet
   service: name=kubelet state=started enabled=yes
