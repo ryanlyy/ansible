@@ -2,8 +2,6 @@
 - name: install chrony on Debin
   when: target_os_family == 'Debian'
   apt: name=chrony state=latest update_cache=true
-  with_items:
-      - chrony
 
 - name: install chrony on CentOS
   when: target_os_family == 'RedHat'
