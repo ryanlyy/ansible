@@ -28,8 +28,11 @@
     owner: root
     group: root
 
-- name: run apt-get update to refresh docker repos
-  shell: apt-get update
+- name: update and upgrade apt packages
+  when: target_os_family == 'Debian'
+  become: true
+  apt:
+    update_cache: yes
 
 - name: Setup repostiroy on Debain
   when: target_os_family == 'Debian'
