@@ -16,6 +16,7 @@ ansible_ssh_pass: newsys
 target_os_family: Debian
 
 kube_apiserver_port: 6443
+kube_apiserver_dest_port: 9443
 kube_apiserver_1: 192.168.122.136
 kube_apiserver_2: 192.168.122.12
 kube_apiserver_3: 192.168.122.98

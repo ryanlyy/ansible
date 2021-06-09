@@ -5,6 +5,7 @@
   remote_user: root
   roles:
     #- os
+    - tools
     #- chrony
     #- docker
     #- kubernetes/common

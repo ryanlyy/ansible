@@ -1,0 +1,7 @@
+---
+- name: install net-tools
+  when: target_os_family == 'Debian'
+  apt: 
+    name: net-tools
+    state: latest 
+    update_cache: true
