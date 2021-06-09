@@ -6,6 +6,14 @@
     owner: root
     group: root
 
+- name: add docker repos on Debian
+  when: target_os_family == 'Debian'
+  copy:
+    src: files/docker.list
+    dest: /etc/apt/sources.list.d
+    owner: root
+    group: root
+    
 - name: update yum configuration
   when: target_os_family == 'RedHat'
   blockinfile:

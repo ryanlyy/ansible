@@ -34,7 +34,7 @@
   apt:
     update_cache: yes
 
-- name: Setup repostiroy on Debain
+- name: install docker-ce
   when: target_os_family == 'Debian'
   apt: 
     name: ['docker-ce', 'docker-ce-cli', 'containerd.io'] 
