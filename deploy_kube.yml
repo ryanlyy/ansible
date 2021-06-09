@@ -4,9 +4,9 @@
   gather_facts: False
   remote_user: root
   roles:
-    - os
-    - chrony
-    - docker
+    #- os
+    #- chrony
+    #- docker
     #- kubernetes/common
 
 - name: install kubernetes controlers
@@ -14,6 +14,7 @@
   gather_facts: False
   remote_user: root
   roles:
+    - ha
     #- kubernetes/controler
 
 - name: install kubernetes workers
