@@ -65,6 +65,13 @@
     name: docker
     state: started
     enabled: yes
+    
+- name: restart Docker service
+  systemd:
+    name: docker
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
 
 - name: Add user docker to docker group
   user:
