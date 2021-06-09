@@ -26,12 +26,12 @@
     owner: root
     group: root
 
-- name: get kubernetes gpg key on Debian
-  when: target_os_family == 'Debain'
-  get_url:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
-  become: yes
+#- name: get kubernetes gpg key on Debian
+#   when: target_os_family == 'Debian'
+#   get_url:
+#    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+#    dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+#  become: yes
 
 - name: update apt packages for kubernetes
   when: target_os_family == 'Debian'
@@ -55,9 +55,11 @@
   command: sysctl --system
 
 - name: setenforce
+  when: target_os_family == 'Redhat'
   command: setenforce 0
 
 - name: update enforce configuration in permissive mode
+  when: target_os_family == 'Redhat'
   replace:
    path: /etc/selinux/config
    regexp: '(^SELINUX=enforcing$)'
