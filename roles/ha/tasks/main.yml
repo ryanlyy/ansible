@@ -8,15 +8,19 @@
 
 - name: install haproxy and keepalived on CentOS
   when: target_os_family == 'RedHat'
-  yum: name={{item}} state=latest update_cache=true
-  with_items:
-      - haproxy
-      - keepalived
+  yum: 
+    name: ['haproxy', 'keepalived'] 
+    state: latest 
+    update_cache: true
+
+- name: custom haproxy configuration 
+  template: 
+    src: haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg
+#  notify: restart chronyd
 
 #- name: start haproxy and keepalived
 #  service: name={{item}} state=started enabled=yes
 #  with_items:
 #      - haproxy
 #      - keepalived
-
-      
